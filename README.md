@@ -1015,10 +1015,12 @@ vizio_processkey:
 
 Again, there are variables needed here:
 
-ip: the IP address of the specific TV
-port: the port the REST service is listening on (normally 7245)
-auth: The AUTH code that allows your app to speak to the TV (see above for getting the AUTH code for a TV)
-codeset and code: a setof of integer values that represent essentially every key. Now, most everything you want to know is here:
+- ip: the IP address of the specific TV
+- port: the port the REST service is listening on (normally 7245)
+- auth: The AUTH code that allows your app to speak to the TV (see above for getting the AUTH code for a TV)
+- codeset and code: a set of of integer values that represent essentially every key. 
+
+Now, most everything you want to know is here:
 
 ```
 Event Name          Codeset         Code
