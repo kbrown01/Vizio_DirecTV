@@ -9,7 +9,7 @@ Requirements were that it must be easy to operate for the wife and look somewhat
 
 ## The Results
 
-Below are some screen and descriptions of the result. This repository includes all of the YAML to build it out with a discussion of what was done. THere is definately room for improvement to make things even more standardized.
+Below are some screen and descriptions of the result. This repository includes all of the YAML to build it out with a discussion of what was done. There is definately room for improvement to make things even more standardized.
 
 I liked the look of the collapsable card for such things, especially on a phone. I did try a swiper card but the results were not good so I abandonded that for now. The default view is "Power off" and it is a simple display.
 
@@ -17,7 +17,7 @@ I liked the look of the collapsable card for such things, especially on a phone.
 
 The input_select used in this mode is actually driven by a custom JSON file I created. More on this later and what it is used for.
 
-To all for a quick select of an action, one can drop down the input_select and pick something to do:
+For a quick select of an action, one can drop down the input_select and pick something to do:
 
 ![quick_select_input.png](quick_select_input.png)
 
@@ -25,15 +25,15 @@ For instance, I could select "Netflix" which will turn on the Vizio if it is not
 
 ![smartcast_netflix.png](smartcast_netflix.png)
 
-Or I can select DirecTV which will set the TV to HDMI-1 (which is DirecTV in my setup). The last channel is would be on. There are two modes to the DirecTV remote, either keypad:
+Or I can select DirecTV which will set the TV to HDMI-1 (which is DirecTV in my setup). The last channel tuned  would be on. There are two modes to the DirecTV remote, either keypad:
 
 ![directv_numeric.png](directv_numeric.png)
 
-Or Favorites:
+Or favorites:
 
 ![directv_favorites.png](directv_favorites.png)
 
-The setup for favorites is controlled by the custom JSON file I use and you can setup different favorites by DirecTV box now. Toggling between keypad and favorites is in the GUI of the remote control with an input_boolean so that the previous mode is always remembered.
+The setup for favorites is controlled by the custom JSON file I use and you can setup different favorites by DirecTV box. The code assumed you have as many favorites as keypad buttons, I could allow for less if I wanted to program that. Toggling between keypad and favorites is in the GUI of the remote control with an input_boolean so that the previous mode is always remembered.
 
 The GUI makes extensive use of custom:button-card because of the abilty to create templates that can be reused when behavior only changes based on some variables. This is so important to making a nice, repeatable and easy to create remote. There is in fact a few more areas where I know I can reduce complexity, I just have not gotten to them yet but will do so in the future.
 
@@ -48,9 +48,9 @@ Since this is a fairly complex system built specifically for Vizio and DirecTV, 
 The standard, Home Assistant DirecTV integration is fine, I used that out of the box to gain access to all the DirecTV boxes which were recognized by the application. The DirecTV Genie operates by a standard main box which has an IP address. Wireless remote Genies are all accessed by knowing the main box's IP address and the wireless remote Genie's Cient Address (clientAddr). The you can find the client address in many ways, either through the created sensors or through the DirecTV GUI for the television or by knowing the secret that it is merely the MacID of the box without the "." separators.
 ### Vizio
 
-While the standard Vizio integration is also likely pretty good, the issue is that you need an AUTH code for the television to be able to send commands to it. If you setup the Vizio through the Home Assistant Vizio integration, I could not find any way of getting the AUTH code. Therefore I created a new one using some simple commands. I would highly suggest reading through this thread which desribes using the REST API for a Vizio TV to get eventually the AUTO code that you need. [Vizio TV Integration](https://community.home-assistant.io/t/vizio-tv-integration/372376/14)
+While the standard Vizio integration is also likely pretty good, the issue is that you need an AUTH code for the television to be able to send commands to it. If you setup the Vizio through the Home Assistant Vizio integration, I could not find any way of getting the AUTH code. Therefore I created a new one using some simple commands. I would highly suggest reading through this thread which desribes using the REST API for a Vizio TV to get eventually the AUTH code that you need. [Vizio TV Integration](https://community.home-assistant.io/t/vizio-tv-integration/372376/14)
 
-I also highly recommend reserving IP addresses or manually setting up your Vizio TV not to use DHCP, but instead use a fixed (or reserved) IP address. Let's say I set up my TV as 192.168.2.90, I could open a web browser and do this (note this is curl used from Windows, hence you need to escape the quote character with the backslash:
+I also highly recommend reserving IP addresses or manually setting up your Vizio TV not to use DHCP, but instead use a fixed (or reserved) IP address. Let's say I set up my TV as 192.168.2.90, I could open a web browser and do this (note this is curl used from Windows, hence you need to escape the quote character with the backslash):
 
 ```
 curl -k -H "Content-Type: application/json" -X PUT -d "{\"DEVICE_ID\":\"12345\",\"DEVICE_NAME\":\"Patio_Vizio\"}" https://192.168.2.90:7345/pairing/start
@@ -60,7 +60,7 @@ You need at least your IP and your port (which should be 7345 for a modern Vizio
 ```
 {"STATUS": {"RESULT": "SUCCESS", "DETAIL": "Success"}, "ITEM": {"CHALLENGE_TYPE": 1, "PAIRING_REQ_TOKEN": #######}}
 ```
-Of course, the Token would be your token. Then you execute anotehr command to get the AUTH code using your token and ID:
+Of course, the Token would be your token. Then you execute another command to get the AUTH code using your token and ID:
 
 ```
 curl -k -H "Content-Type: application/json" -X PUT -d "{\"DEVICE_ID\": \"12345\",\"CHALLENGE_TYPE\": 1,\"RESPONSE_VALUE\": \"####\",\"PAIRING_REQ_TOKEN\": ######}" https://192.168.2.90:7345/pairing/pair
@@ -68,14 +68,14 @@ curl -k -H "Content-Type: application/json" -X PUT -d "{\"DEVICE_ID\": \"12345\"
 You might not be in Windows. I am, hence the extra escape /'s.
 I put those commands in a text editor so I can easily copy/paste.
 
-Once you do this you will never need to do it again.
+Once you do this you will never need to do it again. You can actually go into settings on the TV and see the pairing. Unless the TV loses this pairing, you need not ever do it again.
 
 When you succeed at both steps, the second response would be like this:
 
 ```
 {"STATUS": {"RESULT": "SUCCESS", "DETAIL": "Success"}, "ITEM": {"AUTH_TOKEN": "***********"}}
 ```
-That AUTH_TOKEN is what you want to record/write down … that is the secret that allows you to speak to your TV via the REST commands
+That AUTH_TOKEN is what you want to record/write down … that is the secret that allows you to speak to your TV via the REST commands. This is what I put into my vizio_tv.json file among other things.
 
 Again, I would note that the Vizio Home Assistant Integration does all this for you **except** I see no way of knowing the actual AUTH code. And without that code, you cannot call the REST service. So I just do it myself.
 
@@ -474,7 +474,7 @@ So I have a JSON file that looks like this (I have blocked out my Vizio AUTH cod
 }
 ```
 
-Now, I store this file in my Home Assistant installation and I have a sensor that reads this information. in my included "sensor.yaml" file I have this:
+Now, I store this file in my Home Assistant installation and I have a sensor that reads this information. In my included "sensor.yaml" file I have this:
 
 ```
 - platform: rest
@@ -485,7 +485,7 @@ Now, I store this file in my Home Assistant installation and I have a sensor tha
     - tvs
 ```
 
-Essentially, this creates a sensor (sensor.vizio_tvs) whose date is just a timestamp and has an attribute that contains all the information about the TVs that is in that JSON file. You can put that JSON where you like but I keep mine by in a directory knowing what they do. I have many such things for iBBQ thermometers and other devices. This allows me to simply edit the JSON to add/change information and reload it. If I looked in developer tools I would see this:
+Essentially, this creates a sensor (sensor.vizio_tvs) whose state is just a timestamp and has an attribute that contains all the information about the TVs that is in that JSON file. You can put that JSON where you like but I keep mine by in a directory knowing what they do. I have many such things for iBBQ thermometers and other devices. This allows me to simply edit the JSON to add/change information and reload it. If I looked in developer tools I would see this:
 
 ![sensor_vizio_tv.png](sensor_vizio_tv.png)
 
@@ -546,7 +546,7 @@ I only create the one option here .. "Power off" just to have some option. The r
         {% endif %} {% endfor %}'
   mode: single
 ```
-Oh, what about changing the input_select source? Like I change from "power off" to "Netflix" for from Netflix" to DirecTV. here comes the autmations for all four of my TVs to handle that:
+Oh, what about changing the input_select source? Like I change from "power off" to "Netflix" for from Netflix" to DirecTV. There is an  automations for all four of my TVs to handle that:
 
 ```
 - id: '1658870166462'
@@ -973,14 +973,14 @@ Oh, what about changing the input_select source? Like I change from "power off" 
     default: []
   mode: single
 ```
-Probably again a lot of room for improvement here. 
+Probably again a lot of room for improvement here. One thing to note is that I do not use any power on the DirecTV box when going to that mode as we do not turn off our boxes now. There are always on.
 
 # Rest Interfaces
 
 
 ## DirecTV
 
-While for DirecTV I could possibly use the remote interface, I found that kludgey and more specifically unworkable if you wanted to use a keypad in a GUI to enter a channel like "360". It would send channel 3, channel 6, channel 0 and this is not what you want. So instead, I used the DirecTV REST interface. IN an included rest_command.yaml file, I added these two sensors:
+While for DirecTV I could possibly use the remote sensor, I found that kludgey and more specifically unworkable if you wanted to use a keypad in a GUI to enter a channel like "360". It would send channel 3, channel 6, channel 0 and this is not what you want. So instead, I used the DirecTV REST interface. In the included rest_command.yaml file, I added these two sensors:
 
 ```
 directv_processkey:
@@ -988,7 +988,7 @@ directv_processkey:
 directv_tune:
   url: http://{{ ipAddress }}:8080/tv/tune?clientAddr={{ clientAddr }}&major={{ channel }}&minor=65535
 ```
-These two REST sensors allow me to send a keypress  or a direct command to tune to a specific channel . The second thing is used for your favorites, like sending directly tune the DirecTV unit to channel "206". The first sensor is just like pressing a key on the remote. Now that key could be something like "menu" or "guide" or it could be the "3" on the keypad.
+These two REST sensors allow me to send a keypress  or a direct command to tune to a specific channel . The second sensor is used for favorites, like sending a command to directly tune the DirecTV unit to channel "206". The first sensor is just like pressing a key on the remote. Now that key could be something like "menu" or "guide" or it could be the "3" on the keypad. Just like the DirecTV remote, sending commands this way you have to get the timing right, pausing too long while entering "3-6-0" might land you at channel 36 or even channel 0. But the DirecTV remote entity never worked for me so this is much better (no worse than the actual remote control).
 
 You can see there are some variables needed here:
 
@@ -1016,12 +1016,9 @@ vizio_processkey:
 Again, there are variables needed here:
 
 - ip: the IP address of the specific TV
-- port: the port the REST service is listening on (normally 7245)
+- port: the port the REST service is listening on (normally 7345)
 - auth: The AUTH code that allows your app to speak to the TV (see above for getting the AUTH code for a TV)
-- codeset and code: a set of of integer values that represent essentially every key. 
-
-Now, most everything you want to know is here:
-
+- codeset and code: a setof of integer values that represent essentially every key. Now, most everything you want to know is here:
 ```
 Event Name          Codeset         Code
 Volume Down         5               0
@@ -1048,7 +1045,7 @@ I would note that some of these you may never use or you might want other things
 
 # Building a GUI
 
-IMHO, there is nothing better than [custom:button-card](https://github.com/custom-cards/button-card). There is so much you can do with this card and let's face it, a remote control is a bunch of buttons. The power in this card is the templating ability to use templates (and templates in templates .... and templates in templates in templates). It allows you to create some repeatable templates and use a few variables to pass into those templates for different results. So I will post some tihngs here, most of this will be in the YAML linked. You really need to know custom button-card-templates but hey, dig in and learn. For my four Vizio TVs with DirecTV and also as mentioned before a few Broadlink IR devices, I have this in my custom templates in the Loverlace YAML:
+IMHO, there is nothing better than [custom:button-card](https://github.com/custom-cards/button-card). There is so much you can do with this card and let's face it, a remote control is a bunch of buttons. The power in this card is the templating ability to use templates (and templates in templates .... and templates in templates in templates). It allows you to create some repeatable templates and use a few variables to pass into those templates for different results. So I will post some things here, most of this will be in the YAML linked. You really need to know custom button-card-templates but hey, dig in and learn. For my four Vizio TVs with DirecTV and also as mentioned before a few Broadlink IR devices, I have this in my custom templates in the Loverlace YAML:
 
 ## Button Card Templates
 
@@ -1258,7 +1255,8 @@ I am not going to dig into what all that means, but most of that sets up templat
 
 Like I said, there is room for improvement here. I know I could read the variable "dtvip" from the vizio_tvs.json file and I could also likely move the individual TV ip, port, auth and clientAddr into one template and pass in only the name. Heck, I could probably get that from the entity name. Just have not had time.
 
-Lovelace GUI for the four remotes
+
+## Lovelace GUI for the four remotes
 
 I also do some things with conditional cards that turn on/off parts of the remotes based on the current status of the televisions and the input. I am not going to delve into that, you can analyze and ask questions if you like. I am always happy to help. This is the YAML for Lovelace for the remotes tab. It also uses card-mod for changing some styles and you will be able to analyze and see areas where volume is controlled by Broadlink and not Vizio for some things.
 
