@@ -1,0 +1,2991 @@
+button_card_templates:
+  dtvip:
+    variables:
+      dtvip: 192.168.2.235
+  patio_vizio:
+    triggers_update: all
+    variables:
+      tv: patio_vizio
+      ip: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'patio_vizio').ip ]]]
+      port: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'patio_vizio').port ]]]
+      auth: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'patio_vizio').auth ]]]
+      clientaddr: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'patio_vizio').clientAddr ]]]
+  office_vizio:
+    triggers_update: all
+    variables:
+      tv: office_vizio
+      ip: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'office_vizio').ip ]]]
+      port: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'office_vizio').port ]]]
+      auth: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'office_vizio').auth ]]]
+      clientaddr: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'office_vizio').clientAddr ]]]
+  kitchen_vizio:
+    triggers_update: all
+    variables:
+      tv: kitchen_vizio
+      ip: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'kitchen_vizio').ip ]]]
+      port: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'kitchen_vizio').port ]]]
+      auth: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'kitchen_vizio').auth ]]]
+      clientaddr: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'kitchen_vizio').clientAddr ]]]
+  bedroom_vizio:
+    triggers_update: all
+    variables:
+      tv: bedroom_vizio
+      ip: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'bedroom_vizio').ip ]]]
+      port: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'bedroom_vizio').port ]]]
+      auth: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'bedroom_vizio').auth ]]]
+      clientaddr: >-
+        [[[ return states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name ==
+        'bedroom_vizio').clientAddr ]]]
+  dtv_action:
+    template:
+      - dtvip
+    variables:
+      clientaddr: bar
+      button: foo
+    tap_action:
+      action: call-service
+      service: rest_command.directv_processkey
+      service_data:
+        ipAddress: '[[[ return variables.dtvip ]]]'
+        clientAddr: '[[[ return variables.clientaddr ]]]'
+        key: '[[[ return variables.button ]]]'
+  dtv_fav:
+    template:
+      - dtvip
+    variables:
+      clientaddr: bar
+      button: foo
+    tap_action:
+      action: call-service
+      service: rest_command.directv_tune
+      service_data:
+        ipAddress: '[[[ return variables.dtvip ]]]'
+        clientAddr: '[[[ return variables.clientaddr ]]]'
+        channel: '[[[ return variables.button ]]]'
+  vizio_power:
+    tap_action:
+      action: call-service
+      service: media_player.toggle
+      service_data:
+        entity_id: '[[[ return ''media_player.'' + variables.tv ]]]'
+  vizio_select:
+    variables:
+      button: foo
+    tap_action:
+      action: call-service
+      service: media_player.select_source
+      service_data:
+        source: '[[[ return variables.button ]]]'
+        entity_id: '[[[ return ''media_player.'' + variables.tv ]]]'
+  vizio_action:
+    variables:
+      codeset: 4
+      code: 3
+    tap_action:
+      action: call-service
+      service: rest_command.vizio_processkey
+      service_data:
+        ip: '[[[ return variables.ip ]]]'
+        port: '[[[ return variables.port ]]]'
+        auth: '[[[ return variables.auth ]]]'
+        codeset: '[[[ return variables.codeset ]]]'
+        code: '[[[ return variables.code ]]]'
+  vizio_hold_action:
+    variables:
+      codeset: 4
+      code: 3
+      repeat: 500
+    hold_action:
+      repeat: '[[[ return variables.repeat ]]]'
+      action: call-service
+      service: rest_command.vizio_processkey
+      service_data:
+        ip: '[[[ return variables.ip ]]]'
+        port: '[[[ return variables.port ]]]'
+        auth: '[[[ return variables.auth ]]]'
+        codeset: '[[[ return variables.codeset ]]]'
+        code: '[[[ return variables.code ]]]'
+  broadlink_action:
+    show_name: false
+    variables:
+      command: Vol+
+    tap_action:
+      action: call-service
+      service: remote.send_command
+      service_data:
+        entity_id: entity
+        device: '[[[ return variables.device ]]]'
+        command: '[[[ return variables.command ]]]'
+  firetv_action:
+    variables:
+      button: foo
+    tap_action:
+      action: call-service
+      service: androidtv.adb_command
+      service_data:
+        command: '[[[ return variables.button ]]]'
+        entity_id: media_player.deck_firestick
+  firetv_select:
+    variables:
+      button: foo
+    tap_action:
+      action: call-service
+      service: media_player.select_source
+      service_data:
+        source: '[[[ return variables.button ]]]'
+        entity_id: media_player.deck_firestick
+  zone_button:
+    styles:
+      card:
+        - background: white
+        - color: black
+        - height: 40px
+        - cursor: none
+        - border-radius: 15px
+  label_button_height:
+    styles:
+      card:
+        - height: 43px
+  label_button_style:
+    template:
+      - label_button_height
+    styles:
+      card:
+        - border: none
+        - background: none
+        - box-shadow: none
+        - cursor: none
+  icon_button:
+    size: 32px
+  white_button:
+    color_type: card
+    color: white
+    template:
+      - label_button_height
+  theme_button:
+    template:
+      - label_button_height
+  upleft_radius:
+    styles:
+      card:
+        - border-radius: 30px 5px 5px 5px
+  upright_radius:
+    styles:
+      card:
+        - border-radius: 5px 30px 5px 5px
+  botleft_radius:
+    styles:
+      card:
+        - border-radius: 5px 5px 5px 30px
+  botright_radius:
+    styles:
+      card:
+        - border-radius: 5px 5px 30px 5px
+  all_radius:
+    styles:
+      card:
+        - border-radius: 15px
+views:
+  - theme: Backend-selected
+    title: DirecTV
+    path: directv
+    icon: mdi:remote-tv
+    layout:
+      width: 300
+      max_cols: 4
+    type: custom:vertical-layout
+    badges: []
+    cards:
+      - type: custom:collapsable-cards
+        style: ha-card {overflow:visible!important}
+        title: Kitchen
+        defaultOpen: desktop-only
+        buttonStyle: 'font-size: 20px; border-width: 2px; border-style: solid; '
+        cards:
+          - type: custom:mod-card
+            card:
+              type: vertical-stack
+              cards:
+                - type: entities
+                  entities:
+                    - entity: input_select.kitchen_vizio_input
+                      card_mod:
+                        style:
+                          hui-generic-entity-row $: |
+                            state-badge {
+                              display: none;
+                            }
+                          ha-select $: |
+                            .mdc-select__anchor {
+                              height: 30px !important
+                            }
+                            .mdc-select__selected-text-container {
+                              align-self: center;
+                            }
+                            span#label {
+                              display: none;
+                            }
+                          .: |
+                            ha-select {
+                              height: 30px;
+                            }
+                - type: conditional
+                  conditions:
+                    - entity: media_player.kitchen_vizio
+                      state: 'on'
+                    - entity: input_select.kitchen_vizio_input
+                      state_not: DirecTV
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:replay
+                            template:
+                              - icon_button
+                              - kitchen_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 4
+                              code: 0
+                          - type: custom:button-card
+                            icon: mdi:arrow-up-circle
+                            template:
+                              - icon_button
+                              - kitchen_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 8
+                          - type: custom:button-card
+                            icon: mdi:menu
+                            template:
+                              - icon_button
+                              - kitchen_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 4
+                              code: 8
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:arrow-left-circle
+                            template:
+                              - icon_button
+                              - kitchen_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 1
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - all_radius
+                              - kitchen_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 2
+                            name: OK
+                          - type: custom:button-card
+                            icon: mdi:arrow-right-circle
+                            template:
+                              - icon_button
+                              - kitchen_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 7
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            template:
+                              - label_button_style
+                            name: ''
+                          - type: custom:button-card
+                            icon: mdi:arrow-down-circle
+                            template:
+                              - icon_button
+                              - kitchen_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 0
+                          - type: custom:button-card
+                            template:
+                              - label_button_style
+                            name: ''
+                - type: conditional
+                  conditions:
+                    - entity: media_player.kitchen_vizio
+                      state: 'on'
+                    - entity: input_select.kitchen_vizio_input
+                      state: DirecTV
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - upleft_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: guide
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: menu
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - upright_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: list
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:record-circle-outline
+                            color: orange
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: record
+                          - type: custom:button-card
+                            icon: mdi:arrow-up-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: up
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: exit
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:arrow-left-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: left
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - all_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: select
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            icon: mdi:arrow-right-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: right
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:record
+                            color: red
+                            template:
+                              - icon_button
+                              - botleft_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: active
+                          - type: custom:button-card
+                            icon: mdi:arrow-down-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: down
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - botright_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: info
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:inbox-arrow-up
+                            template:
+                              - icon_button
+                              - upleft_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: chanup
+                          - type: custom:button-card
+                            icon: mdi:inbox-arrow-down
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: chandown
+                          - type: custom:button-card
+                            name: prev
+                            template:
+                              - theme_button
+                              - upright_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: prev
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:play
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: play
+                          - type: custom:button-card
+                            icon: mdi:pause
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: pause
+                          - type: custom:button-card
+                            icon: mdi:step-forward
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: advance
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:rewind
+                            template:
+                              - icon_button
+                              - botleft_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: rew
+                          - type: custom:button-card
+                            entity: input_boolean.directv_kitchen_fav
+                            show_name: false
+                            state:
+                              - value: 'on'
+                                color: var(--paper-item-icon-active-color)
+                              - value: 'off'
+                                color: var(--paper-item-icon-active-color)
+                            template:
+                              - theme_button
+                            icon: >-
+                              [[[ if (entity.state == 'on'){return
+                              "mdi:keyboard"} else {return 'mdi:heart'} ]]]
+                          - type: custom:button-card
+                            icon: mdi:fast-forward
+                            template:
+                              - icon_button
+                              - botright_radius
+                              - dtv_action
+                              - kitchen_vizio
+                            variables:
+                              button: ffwd
+                      - type: conditional
+                        conditions:
+                          - entity: input_boolean.directv_kitchen_fav
+                            state: 'off'
+                        card:
+                          type: vertical-stack
+                          cards:
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upleft_radius
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 1
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 2
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upright_radius
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 3
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 4
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 5
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 6
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 7
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 8
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: 9
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botleft_radius
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: dash
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: '0'
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botright_radius
+                                    - dtv_action
+                                    - kitchen_vizio
+                                  variables:
+                                    button: enter
+                                  name: '[[[ return variables.button ]]]'
+                      - type: conditional
+                        conditions:
+                          - entity: input_boolean.directv_kitchen_fav
+                            state: 'on'
+                        card:
+                          type: vertical-stack
+                          cards:
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upleft_radius
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[0].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[0].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[1].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[1].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upright_radius
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[2].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[2].callsign
+                                    ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[3].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[3].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[4].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[4].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[5].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[5].callsign
+                                    ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[6].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[6].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[7].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[7].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[8].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[8].callsign
+                                    ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botleft_radius
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[9].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[9].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[10].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[10].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botright_radius
+                                    - dtv_fav
+                                    - kitchen_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'kitchen_vizio').favorites[11].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'kitchen_vizio').favorites[11].callsign
+                                    ]]]
+                - type: conditional
+                  conditions:
+                    - entity: media_player.kitchen_vizio
+                      state: 'on'
+                  card:
+                    type: horizontal-stack
+                    cards:
+                      - type: custom:button-card
+                        icon: mdi:volume-plus
+                        template:
+                          - icon_button
+                          - botleft_radius
+                          - broadlink_action
+                        entity: remote.broadlink_kitchen_remote
+                        variables:
+                          device: Kitchen Soundbar
+                          command: Vol+
+                      - type: custom:button-card
+                        icon: mdi:volume-off
+                        template:
+                          - icon_button
+                          - broadlink_action
+                        entity: remote.broadlink_kitchen_remote
+                        variables:
+                          device: Kitchen Soundbar
+                          command: Mute
+                      - type: custom:button-card
+                        icon: mdi:volume-minus
+                        template:
+                          - icon_button
+                          - botright_radius
+                          - broadlink_action
+                        entity: remote.broadlink_kitchen_remote
+                        variables:
+                          device: Kitchen Soundbar
+                          command: Vol-
+            card_mod:
+              style: |
+                ha-card {
+                 border-radius: 15px;
+                 box-shadow: 2px 2px 2px var(--paper-slider-container-color);
+                 -webkit-box-shadow: 2px 2px 2px var(--paper-slider-container-color); 
+                 padding: 15px;
+                 background-color:#b3b3b3;
+                 margin-top: 4px;
+                }
+      - type: custom:layout-break
+      - type: custom:collapsable-cards
+        style: ha-card {overflow:visible!important}
+        title: Master Bedroom
+        defaultOpen: desktop-only
+        buttonStyle: 'font-size: 20px; border-width: 2px; border-style: solid; '
+        cards:
+          - type: custom:mod-card
+            card:
+              type: vertical-stack
+              cards:
+                - type: entities
+                  entities:
+                    - entity: input_select.bedroom_vizio_input
+                      card_mod:
+                        style:
+                          hui-generic-entity-row $: |
+                            state-badge {
+                              display: none;
+                            }
+                          ha-select $: |
+                            .mdc-select__anchor {
+                              height: 30px !important
+                            }
+                            .mdc-select__selected-text-container {
+                              align-self: center;
+                            }
+                            span#label {
+                              display: none;
+                            }
+                          .: |
+                            ha-select {
+                              height: 30px;
+                            } ''
+                - type: conditional
+                  conditions:
+                    - entity: media_player.bedroom_vizio
+                      state: 'on'
+                    - entity: input_select.bedroom_vizio_input
+                      state_not: DirecTV
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:replay
+                            template:
+                              - icon_button
+                              - bedroom_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 4
+                              code: 0
+                          - type: custom:button-card
+                            icon: mdi:arrow-up-circle
+                            template:
+                              - icon_button
+                              - bedroom_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 8
+                          - type: custom:button-card
+                            icon: mdi:menu
+                            template:
+                              - icon_button
+                              - bedroom_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 4
+                              code: 8
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:arrow-left-circle
+                            template:
+                              - icon_button
+                              - bedroom_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 1
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - all_radius
+                              - bedroom_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 2
+                            name: OK
+                          - type: custom:button-card
+                            icon: mdi:arrow-right-circle
+                            template:
+                              - icon_button
+                              - bedroom_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 7
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            template:
+                              - label_button_style
+                            name: ''
+                          - type: custom:button-card
+                            icon: mdi:arrow-down-circle
+                            template:
+                              - icon_button
+                              - bedroom_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 0
+                          - type: custom:button-card
+                            template:
+                              - label_button_style
+                            name: ''
+                - type: conditional
+                  conditions:
+                    - entity: media_player.bedroom_vizio
+                      state: 'on'
+                    - entity: input_select.bedroom_vizio_input
+                      state: DirecTV
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - upleft_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: guide
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: menu
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - upright_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: list
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:record-circle-outline
+                            color: orange
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: record
+                          - type: custom:button-card
+                            icon: mdi:arrow-up-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: up
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: exit
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:arrow-left-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: left
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - all_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: select
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            icon: mdi:arrow-right-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: right
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:record
+                            color: red
+                            template:
+                              - icon_button
+                              - botleft_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: active
+                          - type: custom:button-card
+                            icon: mdi:arrow-down-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: down
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - botright_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: info
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:inbox-arrow-up
+                            template:
+                              - icon_button
+                              - upleft_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: chanup
+                          - type: custom:button-card
+                            icon: mdi:inbox-arrow-down
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: chandown
+                          - type: custom:button-card
+                            name: prev
+                            template:
+                              - theme_button
+                              - upright_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: prev
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:play
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: play
+                          - type: custom:button-card
+                            icon: mdi:pause
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: pause
+                          - type: custom:button-card
+                            icon: mdi:step-forward
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: advance
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:rewind
+                            template:
+                              - icon_button
+                              - botleft_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: rew
+                          - type: custom:button-card
+                            entity: input_boolean.directv_bedroom_fav
+                            show_name: false
+                            state:
+                              - value: 'on'
+                                color: var(--paper-item-icon-active-color)
+                              - value: 'off'
+                                color: var(--paper-item-icon-active-color)
+                            template:
+                              - theme_button
+                            icon: >-
+                              [[[ if (entity.state == 'on'){return
+                              "mdi:keyboard"} else {return 'mdi:heart'} ]]]
+                          - type: custom:button-card
+                            icon: mdi:fast-forward
+                            template:
+                              - icon_button
+                              - botright_radius
+                              - dtv_action
+                              - bedroom_vizio
+                            variables:
+                              button: ffwd
+                      - type: conditional
+                        conditions:
+                          - entity: input_boolean.directv_bedroom_fav
+                            state: 'off'
+                        card:
+                          type: vertical-stack
+                          cards:
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upleft_radius
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 1
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 2
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upright_radius
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 3
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 4
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 5
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 6
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 7
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 8
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: 9
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botleft_radius
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: dash
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: '0'
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botright_radius
+                                    - dtv_action
+                                    - bedroom_vizio
+                                  variables:
+                                    button: enter
+                                  name: '[[[ return variables.button ]]]'
+                      - type: conditional
+                        conditions:
+                          - entity: input_boolean.directv_bedroom_fav
+                            state: 'on'
+                        card:
+                          type: vertical-stack
+                          cards:
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upleft_radius
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[0].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[0].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[1].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[1].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upright_radius
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[2].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[2].callsign
+                                    ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[3].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[3].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[4].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[4].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[5].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[5].callsign
+                                    ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[6].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[6].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[7].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[7].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[8].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[8].callsign
+                                    ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botleft_radius
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[9].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[9].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[10].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[10].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botright_radius
+                                    - dtv_fav
+                                    - bedroom_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'bedroom_vizio').favorites[11].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'bedroom_vizio').favorites[11].callsign
+                                    ]]]
+                - type: conditional
+                  conditions:
+                    - entity: media_player.bedroom_vizio
+                      state: 'on'
+                  card:
+                    type: horizontal-stack
+                    cards:
+                      - type: custom:button-card
+                        icon: mdi:volume-plus
+                        template:
+                          - icon_button
+                          - botleft_radius
+                          - broadlink_action
+                        entity: remote.broadlink_bedroom_remote
+                        variables:
+                          device: Master Denon
+                          command: Vol+
+                      - type: custom:button-card
+                        icon: mdi:volume-off
+                        template:
+                          - icon_button
+                          - broadlink_action
+                        entity: remote.broadlink_bedroom_remote
+                        variables:
+                          device: Master Denon
+                          command: Mute
+                      - type: custom:button-card
+                        icon: mdi:volume-minus
+                        template:
+                          - icon_button
+                          - botright_radius
+                          - broadlink_action
+                        entity: remote.broadlink_bedroom_remote
+                        variables:
+                          device: Master Denon
+                          command: Vol-
+            card_mod:
+              style: |
+                ha-card {
+                 border-radius: 15px;
+                 box-shadow: 2px 2px 2px var(--paper-slider-container-color);
+                 -webkit-box-shadow: 2px 2px 2px var(--paper-slider-container-color); 
+                 padding: 15px;
+                 background-color:#b3b3b3;
+                 margin-top: 4px;
+                }
+      - type: custom:layout-break
+      - type: custom:collapsable-cards
+        style: ha-card {overflow:visible!important}
+        title: Office
+        defaultOpen: desktop-only
+        buttonStyle: 'font-size: 20px; border-width: 2px; border-style: solid; '
+        cards:
+          - type: custom:mod-card
+            card:
+              type: vertical-stack
+              cards:
+                - type: entities
+                  entities:
+                    - entity: input_select.office_vizio_input
+                      card_mod:
+                        style:
+                          hui-generic-entity-row $: |
+                            state-badge {
+                              display: none;
+                            }
+                          ha-select $: |
+                            .mdc-select__anchor {
+                              height: 30px !important
+                            }
+                            .mdc-select__selected-text-container {
+                              align-self: center;
+                            }
+                            span#label {
+                              display: none;
+                            }
+                          .: |
+                            ha-select {
+                              height: 30px;
+                            }
+                - type: conditional
+                  conditions:
+                    - entity: media_player.office_vizio
+                      state: 'on'
+                    - entity: input_select.office_vizio_input
+                      state_not: DirecTV
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:replay
+                            template:
+                              - icon_button
+                              - office_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 4
+                              code: 0
+                          - type: custom:button-card
+                            icon: mdi:arrow-up-circle
+                            template:
+                              - icon_button
+                              - office_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 8
+                          - type: custom:button-card
+                            icon: mdi:menu
+                            template:
+                              - icon_button
+                              - office_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 4
+                              code: 8
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:arrow-left-circle
+                            template:
+                              - icon_button
+                              - office_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 1
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - all_radius
+                              - office_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 2
+                            name: OK
+                          - type: custom:button-card
+                            icon: mdi:arrow-right-circle
+                            template:
+                              - icon_button
+                              - office_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 7
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            template:
+                              - label_button_style
+                            name: ''
+                          - type: custom:button-card
+                            icon: mdi:arrow-down-circle
+                            template:
+                              - icon_button
+                              - office_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 0
+                          - type: custom:button-card
+                            template:
+                              - label_button_style
+                            name: ''
+                - type: conditional
+                  conditions:
+                    - entity: media_player.office_vizio
+                      state: 'on'
+                    - entity: input_select.office_vizio_input
+                      state: DirecTV
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - upleft_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: guide
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: menu
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - upright_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: list
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:record-circle-outline
+                            color: orange
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: record
+                          - type: custom:button-card
+                            icon: mdi:arrow-up-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: up
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: exit
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:arrow-left-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: left
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - all_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: select
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            icon: mdi:arrow-right-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: right
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:record
+                            color: red
+                            template:
+                              - icon_button
+                              - botleft_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: active
+                          - type: custom:button-card
+                            icon: mdi:arrow-down-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: down
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - botright_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: info
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:inbox-arrow-up
+                            template:
+                              - icon_button
+                              - upleft_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: chanup
+                          - type: custom:button-card
+                            icon: mdi:inbox-arrow-down
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: chandown
+                          - type: custom:button-card
+                            name: prev
+                            template:
+                              - theme_button
+                              - upright_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: prev
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:play
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: play
+                          - type: custom:button-card
+                            icon: mdi:pause
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: pause
+                          - type: custom:button-card
+                            icon: mdi:step-forward
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: advance
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:rewind
+                            template:
+                              - icon_button
+                              - botleft_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: rew
+                          - type: custom:button-card
+                            entity: input_boolean.directv_office_fav
+                            show_name: false
+                            state:
+                              - value: 'on'
+                                color: var(--paper-item-icon-active-color)
+                              - value: 'off'
+                                color: var(--paper-item-icon-active-color)
+                            template:
+                              - theme_button
+                            icon: >-
+                              [[[ if (entity.state == 'on'){return
+                              "mdi:keyboard"} else {return 'mdi:heart'} ]]]
+                          - type: custom:button-card
+                            icon: mdi:fast-forward
+                            template:
+                              - icon_button
+                              - botright_radius
+                              - dtv_action
+                              - office_vizio
+                            variables:
+                              button: ffwd
+                      - type: conditional
+                        conditions:
+                          - entity: input_boolean.directv_office_fav
+                            state: 'off'
+                        card:
+                          type: vertical-stack
+                          cards:
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upleft_radius
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 1
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 2
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upright_radius
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 3
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 4
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 5
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 6
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 7
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 8
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: 9
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botleft_radius
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: dash
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: '0'
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botright_radius
+                                    - dtv_action
+                                    - office_vizio
+                                  variables:
+                                    button: enter
+                                  name: '[[[ return variables.button ]]]'
+                      - type: conditional
+                        conditions:
+                          - entity: input_boolean.directv_office_fav
+                            state: 'on'
+                        card:
+                          type: vertical-stack
+                          cards:
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upleft_radius
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[0].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[0].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[1].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[1].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upright_radius
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[2].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[2].callsign ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[3].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[3].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[4].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[4].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[5].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[5].callsign ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[6].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[6].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[7].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[7].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[8].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[8].callsign ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botleft_radius
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[9].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[9].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[10].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[10].callsign
+                                    ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botright_radius
+                                    - dtv_fav
+                                    - office_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'office_vizio').favorites[11].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'office_vizio').favorites[11].callsign
+                                    ]]]
+                - type: conditional
+                  conditions:
+                    - entity: media_player.office_vizio
+                      state: 'on'
+                  card:
+                    type: horizontal-stack
+                    cards:
+                      - type: custom:button-card
+                        icon: mdi:volume-plus
+                        template:
+                          - icon_button
+                          - office_vizio
+                          - vizio_action
+                        variables:
+                          codeset: 5
+                          code: 1
+                      - type: custom:button-card
+                        icon: mdi:volume-off
+                        template:
+                          - icon_button
+                          - office_vizio
+                          - vizio_action
+                        variables:
+                          codeset: 5
+                          code: 4
+                      - type: custom:button-card
+                        icon: mdi:volume-minus
+                        template:
+                          - icon_button
+                          - office_vizio
+                          - vizio_action
+                        variables:
+                          codeset: 5
+                          code: 0
+            card_mod:
+              style: |
+                ha-card {
+                 border-radius: 15px;
+                 box-shadow: 2px 2px 2px var(--paper-slider-container-color);
+                 -webkit-box-shadow: 2px 2px 2px var(--paper-slider-container-color); 
+                 padding: 15px;
+                 background-color:#b3b3b3;
+                 margin-top: 4px;
+                }
+      - type: custom:layout-break
+      - type: custom:collapsable-cards
+        style: ha-card {overflow:visible!important}
+        title: Patio
+        defaultOpen: desktop-only
+        buttonStyle: 'font-size: 20px; border-width: 2px; border-style: solid; '
+        cards:
+          - type: custom:mod-card
+            card:
+              type: vertical-stack
+              cards:
+                - type: entities
+                  entities:
+                    - entity: input_select.patio_vizio_input
+                      card_mod:
+                        style:
+                          hui-generic-entity-row $: |
+                            state-badge {
+                              display: none;
+                            }
+                          ha-select $: |
+                            .mdc-select__anchor {
+                              height: 30px !important
+                            }
+                            .mdc-select__selected-text-container {
+                              align-self: center;
+                            }
+                            span#label {
+                              display: none;
+                            }
+                          .: |
+                            ha-select {
+                              height: 30px;
+                            }
+                - type: conditional
+                  conditions:
+                    - entity: media_player.patio_vizio
+                      state: 'on'
+                    - entity: input_select.patio_vizio_input
+                      state_not: DirecTV
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:replay
+                            template:
+                              - icon_button
+                              - patio_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 4
+                              code: 0
+                          - type: custom:button-card
+                            icon: mdi:arrow-up-circle
+                            template:
+                              - icon_button
+                              - patio_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 8
+                          - type: custom:button-card
+                            icon: mdi:menu
+                            template:
+                              - icon_button
+                              - patio_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 4
+                              code: 8
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:arrow-left-circle
+                            template:
+                              - icon_button
+                              - patio_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 1
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - all_radius
+                              - patio_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 2
+                            name: OK
+                          - type: custom:button-card
+                            icon: mdi:arrow-right-circle
+                            template:
+                              - icon_button
+                              - patio_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 7
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            template:
+                              - label_button_style
+                            name: ''
+                          - type: custom:button-card
+                            icon: mdi:arrow-down-circle
+                            template:
+                              - icon_button
+                              - patio_vizio
+                              - vizio_action
+                            variables:
+                              codeset: 3
+                              code: 0
+                          - type: custom:button-card
+                            template:
+                              - label_button_style
+                            name: ''
+                - type: conditional
+                  conditions:
+                    - entity: media_player.patio_vizio
+                      state: 'on'
+                    - entity: input_select.patio_vizio_input
+                      state: DirecTV
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - upleft_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: guide
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: menu
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            template:
+                              - white_button
+                              - upright_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: list
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:record-circle-outline
+                            color: orange
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: record
+                          - type: custom:button-card
+                            icon: mdi:arrow-up-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: up
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: exit
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:arrow-left-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: left
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - all_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: select
+                            name: '[[[ return variables.button ]]]'
+                          - type: custom:button-card
+                            icon: mdi:arrow-right-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: right
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:record
+                            color: red
+                            template:
+                              - icon_button
+                              - botleft_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: active
+                          - type: custom:button-card
+                            icon: mdi:arrow-down-circle
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: down
+                          - type: custom:button-card
+                            template:
+                              - theme_button
+                              - botright_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: info
+                            name: '[[[ return variables.button ]]]'
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:inbox-arrow-up
+                            template:
+                              - icon_button
+                              - upleft_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: chanup
+                          - type: custom:button-card
+                            icon: mdi:inbox-arrow-down
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: chandown
+                          - type: custom:button-card
+                            name: prev
+                            template:
+                              - theme_button
+                              - upright_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: prev
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:play
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: play
+                          - type: custom:button-card
+                            icon: mdi:pause
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: pause
+                          - type: custom:button-card
+                            icon: mdi:step-forward
+                            template:
+                              - icon_button
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: advance
+                      - type: horizontal-stack
+                        cards:
+                          - type: custom:button-card
+                            icon: mdi:rewind
+                            template:
+                              - icon_button
+                              - botleft_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: rew
+                          - type: custom:button-card
+                            entity: input_boolean.directv_patio_fav
+                            show_name: false
+                            state:
+                              - value: 'on'
+                                color: var(--paper-item-icon-active-color)
+                              - value: 'off'
+                                color: var(--paper-item-icon-active-color)
+                            template:
+                              - theme_button
+                            icon: >-
+                              [[[ if (entity.state == 'on'){return
+                              "mdi:keyboard"} else {return 'mdi:heart'} ]]]
+                          - type: custom:button-card
+                            icon: mdi:fast-forward
+                            template:
+                              - icon_button
+                              - botright_radius
+                              - dtv_action
+                              - patio_vizio
+                            variables:
+                              button: ffwd
+                      - type: conditional
+                        conditions:
+                          - entity: input_boolean.directv_patio_fav
+                            state: 'off'
+                        card:
+                          type: vertical-stack
+                          cards:
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upleft_radius
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 1
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 2
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upright_radius
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 3
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 4
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 5
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 6
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 7
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 8
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: 9
+                                  name: '[[[ return variables.button ]]]'
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botleft_radius
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: dash
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: '0'
+                                  name: '[[[ return variables.button ]]]'
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botright_radius
+                                    - dtv_action
+                                    - patio_vizio
+                                  variables:
+                                    button: enter
+                                  name: '[[[ return variables.button ]]]'
+                      - type: conditional
+                        conditions:
+                          - entity: input_boolean.directv_patio_fav
+                            state: 'on'
+                        card:
+                          type: vertical-stack
+                          cards:
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upleft_radius
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[0].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[0].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[1].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[1].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - upright_radius
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[2].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[2].callsign ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[3].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[3].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[4].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[4].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[5].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[5].callsign ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[6].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[6].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[7].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[7].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[8].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[8].callsign ]]]
+                            - type: horizontal-stack
+                              cards:
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botleft_radius
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[9].channel ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[9].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[10].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[10].callsign ]]]
+                                - type: custom:button-card
+                                  template:
+                                    - white_button
+                                    - botright_radius
+                                    - dtv_fav
+                                    - patio_vizio
+                                  variables:
+                                    button: >-
+                                      [[[ return
+                                      states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                      == 'patio_vizio').favorites[11].channel
+                                      ]]]
+                                  name: >-
+                                    [[[ return
+                                    states['sensor.vizio_tvs'].attributes.tvs.find(x=>x.name
+                                    == 'patio_vizio').favorites[11].callsign ]]]
+                - type: conditional
+                  conditions:
+                    - entity: media_player.patio_vizio
+                      state: 'on'
+                  card:
+                    type: horizontal-stack
+                    cards:
+                      - type: custom:button-card
+                        icon: mdi:volume-plus
+                        template:
+                          - icon_button
+                          - patio_vizio
+                          - vizio_action
+                        variables:
+                          codeset: 5
+                          code: 1
+                      - type: custom:button-card
+                        icon: mdi:volume-off
+                        template:
+                          - icon_button
+                          - patio_vizio
+                          - vizio_action
+                        variables:
+                          codeset: 5
+                          code: 4
+                      - type: custom:button-card
+                        icon: mdi:volume-minus
+                        template:
+                          - icon_button
+                          - patio_vizio
+                          - vizio_action
+                        variables:
+                          codeset: 5
+                          code: 0
+            card_mod:
+              style: |
+                ha-card {
+                 border-radius: 15px;
+                 box-shadow: 2px 2px 2px var(--paper-slider-container-color);
+                 -webkit-box-shadow: 2px 2px 2px var(--paper-slider-container-color); 
+                 padding: 15px;
+                 background-color:#b3b3b3;
+                 margin-top: 4px;
+                }
