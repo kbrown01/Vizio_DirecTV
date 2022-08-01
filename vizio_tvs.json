@@ -1,0 +1,384 @@
+{
+    "tvs": [
+        {
+            "name": "patio_vizio",
+            "ip": "192.168.2.90",
+            "port": 7345,
+            "auth": "************",
+            "clientAddr": "********",
+            "favorites": [
+                 {
+                    "callsign": "ESPNHD",
+                    "channel": 206
+                },
+                 {
+                    "callsign": "ESPN2HD",
+                    "channel": 209
+                },
+                {
+                    "callsign": "NFLHD",
+                    "channel": 202
+                },
+                 {
+                    "callsign": "NFLHD",
+                    "channel": 212
+                },
+                {
+                    "callsign": "NHLHD",
+                    "channel": 215
+                },
+                 {
+                    "callsign": "MLBHD",
+                    "channel": 213
+                },
+                {
+                    "callsign": "NBAHD",
+                    "channel": 216
+                },
+                 {
+                    "callsign": "GolfHD",
+                    "channel": 218
+                },
+                {
+                    "callsign": "FS1HD",
+                    "channel": 219
+                },
+                 {
+                    "callsign": "NBCSHD",
+                    "channel": 220
+                },
+                {
+                    "callsign": "CBSSHND",
+                    "channel": 221
+                },
+                 {
+                    "callsign": "RedZone",
+                    "channel": 702
+                },
+                {
+                    "callsign": "BTNHD",
+                    "channel": 610
+                }
+            ],
+            "inputs": [
+                {
+                    "fname": "Power off",
+                    "input": "Power off" 
+                },
+                 {
+                    "fname": "DirecTV",
+                    "input": "HDMI-1"
+                },
+                 {
+                    "fname": "Smartcast",
+                    "input": "CAST"
+                },
+                {
+                    "fname": "Netflix",
+                    "input": "Netflix"
+                },
+                 {
+                    "fname": "HBOMax",
+                    "input": "HBO Max"
+                },
+                {
+                    "fname": "YouTube",
+                    "input": "YouTube"
+                },
+                {
+                    "fname": "Amazon Prime",
+                    "input": "Prime"
+                },
+                {
+                    "fname": "Hulu",
+                    "input": "Hulu"
+                },
+                {
+                    "fname": "AppleTV",
+                    "input": "Apple TV"
+                },
+                {
+                    "fname": "Discovery+",
+                    "input": "discovery+"
+                },
+                {
+                    "fname": "Disney+",
+                    "input": "Disney+"
+                },
+                {
+                    "fname": "Fox Now",
+                    "input": "FOX NOW"
+                }
+            ]
+        },
+        {
+            "name": "office_vizio",
+            "ip": "192.168.2.20",
+            "port": 7345,
+            "auth": "************",
+            "clientAddr": "********",
+            "favorites": [
+                 {
+                    "callsign": "ESPNHD",
+                    "channel": 206
+                },
+                 {
+                    "callsign": "ESPN2HD",
+                    "channel": 209
+                },
+                {
+                    "callsign": "NFLHD",
+                    "channel": 202
+                },
+                 {
+                    "callsign": "NFLHD",
+                    "channel": 212
+                },
+                {
+                    "callsign": "NHLHD",
+                    "channel": 215
+                },
+                 {
+                    "callsign": "MLBHD",
+                    "channel": 213
+                },
+                {
+                    "callsign": "NBAHD",
+                    "channel": 216
+                },
+                 {
+                    "callsign": "GolfHD",
+                    "channel": 218
+                },
+                {
+                    "callsign": "FS1HD",
+                    "channel": 219
+                },
+                 {
+                    "callsign": "FOXNHD",
+                    "channel": 360
+                },
+                {
+                    "callsign": "CBSSHND",
+                    "channel": 221
+                },
+                 {
+                    "callsign": "RedZone",
+                    "channel": 702
+                },
+                {
+                    "callsign": "BTNHD",
+                    "channel": 610
+                }
+            ],
+            "inputs": [
+                {
+                    "fname": "Power off",
+                    "input": "Power off" 
+                },
+                 {
+                    "fname": "DirecTV",
+                    "input": "HDMI-1"
+                },
+                 {
+                    "fname": "Smartcast",
+                    "input": "CAST"
+                },
+                {
+                    "fname": "Netflix",
+                    "input": "Netflix"
+                },
+                 {
+                    "fname": "HBOMax",
+                    "input": "HBO Max"
+                },
+                {
+                    "fname": "YouTube",
+                    "input": "YouTube"
+                },
+                {
+                    "fname": "Amazon Prime",
+                    "input": "Prime"
+                },
+                {
+                    "fname": "Hulu",
+                    "input": "Hulu"
+                },
+                {
+                    "fname": "AppleTV",
+                    "input": "Apple TV"
+                },
+                {
+                    "fname": "Discovery+",
+                    "input": "discovery+"
+                },
+                {
+                    "fname": "Disney+",
+                    "input": "Disney+"
+                },
+                {
+                    "fname": "Fox Now",
+                    "input": "FOX NOW"
+                }
+            ]
+        },
+        {
+            "name": "bedroom_vizio",
+            "ip": "192.168.2.5",
+            "port": 7345,
+            "auth": "************",
+            "clientAddr": "0",
+            "favorites": [
+                {
+                    "callsign": "HGTVHD",
+                    "channel": 229
+                },
+                {
+                    "callsign": "MAGNHD",
+                    "channel": 230
+                },
+                {
+                    "callsign": "FOXNHD",
+                    "channel": 360
+                },
+                {
+                    "callsign": "FOODHD",
+                    "channel": 231
+                },
+                {
+                    "callsign": "HISTHD",
+                    "channel": 269
+                },
+                {
+                    "callsign": "NGCHD",
+                    "channel": 276
+                },
+                {
+                    "callsign": "DSCHD",
+                    "channel": 278
+                },
+                {
+                    "callsign": "TLCHD",
+                    "channel": 280
+                },
+                {
+                    "callsign": "HBOWHD",
+                    "channel": 504
+                },
+                {
+                    "callsign": "MAXWHD",
+                    "channel": 516
+                },
+                {
+                    "callsign": "STZWHD",
+                    "channel": 526
+                },
+                {
+                    "callsign": "SHOWHD",
+                    "channel": 546
+                }
+            ],
+            "inputs": [
+                {
+                    "fname": "Power off",
+                    "input": "Power off" 
+                },
+                 {
+                    "fname": "DirecTV",
+                    "input": "HDMI-1"
+                },
+                 {
+                    "fname": "Smartcast",
+                    "input": "CAST"
+                },
+                {
+                    "fname": "Netflix",
+                    "input": "Netflix"
+                },
+                 {
+                    "fname": "HBOMax",
+                    "input": "HBO Max"
+                }
+            ]
+        },
+        {
+            "name": "kitchen_vizio",
+            "ip": "192.168.2.22",
+            "port": 7345,
+            "auth": "************",
+            "clientAddr": "********",
+            "favorites": [
+                {
+                    "callsign": "HGTVHD",
+                    "channel": 229
+                },
+                {
+                    "callsign": "MAGNHD",
+                    "channel": 230
+                },
+                {
+                    "callsign": "FOXNHD",
+                    "channel": 360
+                },
+                {
+                    "callsign": "FOODHD",
+                    "channel": 231
+                },
+                {
+                    "callsign": "HISTHD",
+                    "channel": 269
+                },
+                {
+                    "callsign": "NGCHD",
+                    "channel": 276
+                },
+                {
+                    "callsign": "DSCHD",
+                    "channel": 278
+                },
+                {
+                    "callsign": "TLCHD",
+                    "channel": 280
+                },
+                {
+                    "callsign": "HBOWHD",
+                    "channel": 504
+                },
+                {
+                    "callsign": "MAXWHD",
+                    "channel": 516
+                },
+                {
+                    "callsign": "STZWHD",
+                    "channel": 526
+                },
+                {
+                    "callsign": "SHOWHD",
+                    "channel": 546
+                }
+            ],
+            "inputs": [
+                {
+                    "fname": "Power off",
+                    "input": "Power off" 
+                },
+                 {
+                    "fname": "DirecTV",
+                    "input": "HDMI-1"
+                },
+                 {
+                    "fname": "Smartcast",
+                    "input": "CAST"
+                },
+                {
+                    "fname": "Netflix",
+                    "input": "Netflix"
+                },
+                 {
+                    "fname": "HBOMax",
+                    "input": "HBO Max"
+                }
+            ]
+        }
+    ]
+}
