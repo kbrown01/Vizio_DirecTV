@@ -1,0 +1,6 @@
+- platform: rest
+  name: vizio_tvs
+  resource: http://192.168.2.245:8123/local/Vizio/vizio_tvs.json
+  value_template: "{{ now() }}"
+  json_attributes:
+    - tvs
