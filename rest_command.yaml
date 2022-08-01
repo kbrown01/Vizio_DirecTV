@@ -1,0 +1,12 @@
+directv_processkey:
+  url: http://{{ ipAddress }}:8080/remote/processKey?clientAddr={{ clientAddr }}&key={{ key }}
+directv_tune:
+  url: http://{{ ipAddress }}:8080/tv/tune?clientAddr={{ clientAddr }}&major={{ channel }}&minor=65535
+vizio_processkey:
+  url: 'https://{{ ip }}:{{ port }}/key_command/'
+  method: put
+  content_type: "application/json"
+  headers:
+    AUTH: '{{ auth }}'
+  payload: '{"KEYLIST": [{"CODESET": {{ codeset | int }},"CODE": {{ code | int }},"ACTION":"KEYPRESS"}]}'
+  verify_ssl: false
