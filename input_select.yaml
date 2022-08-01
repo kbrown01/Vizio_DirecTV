@@ -1,0 +1,12 @@
+patio_vizio_input:
+    options:
+        - Power off
+office_vizio_input:
+    options:
+        - Power off
+kitchen_vizio_input:
+    options:
+        - Power off
+bedroom_vizio_input:
+    options:
+        - Power off
