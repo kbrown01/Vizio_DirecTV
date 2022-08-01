@@ -1,0 +1,246 @@
+- id: '1658870166462'
+  alias: Change Patio Vizio Source
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.patio_vizio_input
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.patio_vizio_input
+        state: Power off
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.patio_vizio
+    - conditions:
+      - condition: template
+        value_template: '{{is_state(''media_player.patio_vizio'',''off'')}}'
+      sequence:
+      - service: media_player.turn_on
+        data_template:
+          entity_id: media_player.patio_vizio
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 3
+          milliseconds: 0
+      - service: media_player.select_source
+        data_template:
+          source: '{% set choice = state_attr(''input_select.patio_vizio_input'',''options'').index(states(''input_select.patio_vizio_input''))
+            %} {% set tv = state_attr(''sensor.vizio_tvs'',''tvs'') | selectattr(''name'',''search'',''patio_vizio'')
+            | list %} {{ tv[0].inputs[choice].input }}
+
+            '
+          entity_id: media_player.patio_vizio
+    - conditions:
+      - condition: template
+        value_template: '{{is_state(''media_player.patio_vizio'',''on'')}}'
+      sequence:
+      - service: media_player.select_source
+        data_template:
+          source: '{% set choice = state_attr(''input_select.patio_vizio_input'',''options'').index(states(''input_select.patio_vizio_input''))
+            %} {% set tv = state_attr(''sensor.vizio_tvs'',''tvs'') | selectattr(''name'',''search'',''patio_vizio'')
+            | list %} {{ tv[0].inputs[choice].input }}
+
+            '
+          entity_id: media_player.patio_vizio
+    default: []
+  mode: single
+- id: '1658870166663'
+  alias: Change Office Vizio Source
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.office_vizio_input
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.office_vizio_input
+        state: Power off
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.office_vizio
+    - conditions:
+      - condition: template
+        value_template: '{{is_state(''media_player.office_vizio'',''off'')}}'
+      sequence:
+      - service: media_player.turn_on
+        data_template:
+          entity_id: media_player.office_vizio
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 3
+          milliseconds: 0
+      - service: media_player.select_source
+        data_template:
+          source: '{% set choice = state_attr(''input_select.office_vizio_input'',''options'').index(states(''input_select.office_vizio_input''))
+            %} {% set tv = state_attr(''sensor.vizio_tvs'',''tvs'') | selectattr(''name'',''search'',''office_vizio'')
+            | list %} {{ tv[0].inputs[choice].input }}
+
+            '
+          entity_id: media_player.office_vizio
+    - conditions:
+      - condition: template
+        value_template: '{{is_state(''media_player.office_vizio'',''on'')}}'
+      sequence:
+      - service: media_player.select_source
+        data_template:
+          source: '{% set choice = state_attr(''input_select.office_vizio_input'',''options'').index(states(''input_select.office_vizio_input''))
+            %} {% set tv = state_attr(''sensor.vizio_tvs'',''tvs'') | selectattr(''name'',''search'',''office_vizio'')
+            | list %} {{ tv[0].inputs[choice].input }}
+
+            '
+          entity_id: media_player.office_vizio
+    default: []
+  mode: single
+- id: '1658870177773'
+  alias: Change Kitchen Vizio Source
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.kitchen_vizio_input
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.kitchen_vizio_input
+        state: Power off
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.kitchen_vizio
+    - conditions:
+      - condition: template
+        value_template: '{{is_state(''media_player.kitchen_vizio'',''off'')}}'
+      sequence:
+      - service: media_player.turn_on
+        data_template:
+          entity_id: media_player.kitchen_vizio
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 3
+          milliseconds: 0
+      - service: media_player.select_source
+        data_template:
+          source: '{% set choice = state_attr(''input_select.kitchen_vizio_input'',''options'').index(states(''input_select.kitchen_vizio_input''))
+            %} {% set tv = state_attr(''sensor.vizio_tvs'',''tvs'') | selectattr(''name'',''search'',''kitchen_vizio'')
+            | list %} {{ tv[0].inputs[choice].input }}
+
+            '
+          entity_id: media_player.kitchen_vizio
+    - conditions:
+      - condition: template
+        value_template: '{{is_state(''media_player.kitchen_vizio'',''on'')}}'
+      sequence:
+      - service: media_player.select_source
+        data_template:
+          source: '{% set choice = state_attr(''input_select.kitchen_vizio_input'',''options'').index(states(''input_select.kitchen_vizio_input''))
+            %} {% set tv = state_attr(''sensor.vizio_tvs'',''tvs'') | selectattr(''name'',''search'',''kitchen_vizio'')
+            | list %} {{ tv[0].inputs[choice].input }}
+
+            '
+          entity_id: media_player.kitchen_vizio
+    default: []
+  mode: single
+- id: '1658870199993'
+  alias: Change Bedroom Vizio Source
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.bedroom_vizio_input
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.bedroom_vizio_input
+        state: Power off
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.bedroom_vizio
+    - conditions:
+      - condition: template
+        value_template: '{{is_state(''media_player.bedroom_vizio'',''off'')}}'
+      sequence:
+      - service: media_player.turn_on
+        data_template:
+          entity_id: media_player.bedroom_vizio
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 3
+          milliseconds: 0
+      - service: media_player.select_source
+        data_template:
+          source: '{% set choice = state_attr(''input_select.bedroom_vizio_input'',''options'').index(states(''input_select.bedroom_vizio_input''))
+            %} {% set tv = state_attr(''sensor.vizio_tvs'',''tvs'') | selectattr(''name'',''search'',''bedroom_vizio'')
+            | list %} {{ tv[0].inputs[choice].input }}
+
+            '
+          entity_id: media_player.bedroom_vizio
+    - conditions:
+      - condition: template
+        value_template: '{{is_state(''media_player.bedroom_vizio'',''on'')}}'
+      sequence:
+      - service: media_player.select_source
+        data_template:
+          source: '{% set choice = state_attr(''input_select.bedroom_vizio_input'',''options'').index(states(''input_select.bedroom_vizio_input''))
+            %} {% set tv = state_attr(''sensor.vizio_tvs'',''tvs'') | selectattr(''name'',''search'',''bedroom_vizio'')
+            | list %} {{ tv[0].inputs[choice].input }}
+
+            '
+          entity_id: media_player.bedroom_vizio
+    default: []
+  mode: single
+- id: '1659026711599'
+  alias: Build Vizio Inputs
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.vizio_tvs
+  condition: []
+  action:
+  - service: input_select.set_options
+    data_template:
+      entity_id: input_select.office_vizio_input
+      options: '{% set ttv = ''office_vizio'' %} {% for tvs in state_attr(''sensor.vizio_tvs'',''tvs'')  %}
+        {% if tvs.name == ttv %} {{tvs.inputs | map(attribute=''fname'') | list }}
+        {% endif %} {% endfor %}'
+  - service: input_select.set_options
+    data_template:
+      entity_id: input_select.patio_vizio_input
+      options: '{% set ttv = ''patio_vizio'' %} {% for tvs in state_attr(''sensor.vizio_tvs'',''tvs'')  %}
+        {% if tvs.name == ttv %} {{tvs.inputs | map(attribute=''fname'') | list }}
+        {% endif %} {% endfor %}'
+  - service: input_select.set_options
+    data_template:
+      entity_id: input_select.kitchen_vizio_input
+      options: '{% set ttv = ''kitchen_vizio'' %} {% for tvs in state_attr(''sensor.vizio_tvs'',''tvs'')  %}
+        {% if tvs.name == ttv %} {{tvs.inputs | map(attribute=''fname'') | list }}
+        {% endif %} {% endfor %}'
+  - service: input_select.set_options
+    data_template:
+      entity_id: input_select.bedroom_vizio_input
+      options: '{% set ttv = ''bedroom_vizio'' %} {% for tvs in state_attr(''sensor.vizio_tvs'',''tvs'')  %}
+        {% if tvs.name == ttv %} {{tvs.inputs | map(attribute=''fname'') | list }}
+        {% endif %} {% endfor %}'
+  mode: single
