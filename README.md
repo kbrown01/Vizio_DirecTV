@@ -1,5 +1,7 @@
 # Vizio + DirecTV  Home Assistant Remote 
 
+**NOTE: I have posted an issue as the Vizio TV integration seems broken for new Vizio TVs from an update that just happened. I will do any modifications needed after this gets resolved.**
+
 I hate remotes. Period. So I wanted to eliminate all them for phone/PAD/computer Home Assistant interfaces. This is a collection of YAML, sensors and automations that I used to do that.
 
 First off, I have four Vizio TVs all with DirecTV boxes. The DirectTV system we use is the Genie with one main box wired and a video bridge that has three wireless Genie Mini's. I should also note that we have a few  Broadlink devices to support two of the four TVs . One is used for an old Denon reveiver in the Bedroom that only have IR input. The other is used for an older Vizio soundbar in the kitchen that also has IR  input.
